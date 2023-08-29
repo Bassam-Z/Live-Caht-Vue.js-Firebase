@@ -1,14 +1,30 @@
 <template>
   <div class="container">
     <Navbar/>
+    <NewChatForm/>
   </div>
 </template>
 
 <script>
+import NewChatForm from '@/components/NewChatForm.vue';
 import Navbar from '@/components/Navbar.vue';
+import getUser from '@/composables/getUser';
+import router from '@/router';
+import { watch } from 'vue';
 
 export default {
-components: { Navbar}
+components: { Navbar, NewChatForm},
+
+setup(){
+  const { user } = getUser();
+
+  watch(user, () =>{
+    if(!user.value){
+      router.push({name: 'Welcome'})
+    }
+  })
+
+}
 }
 </script>
 
